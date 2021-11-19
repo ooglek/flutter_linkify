@@ -307,7 +307,7 @@ TextSpan buildTextSpan(
   bool useMouseRegion = false,
 }) {
   return TextSpan(
-    children: elements.map<WidgetSpan>(
+    children: elements.map<InlineSpan>(
       (element) {
         if (element is LinkableElement) {
           if (useMouseRegion) {
