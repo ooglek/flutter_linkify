@@ -310,30 +310,17 @@ TextSpan buildTextSpan(
     children: elements.map<TextSpan>(
       (element) {
         if (element is LinkableElement) {
-          if (useMouseRegion) {
-            return LinkableSpan(
-              mouseCursor: SystemMouseCursors.click,
-              inlineSpan: TextSpan(
-                text: element.text,
-                style: linkStyle,
-                recognizer: onOpen != null
-                    ? (TapGestureRecognizer()..onTap = () => onOpen(element))
-                    : null,
-              ),
-            );
-          } else {
-            return TextSpan(
-                text: element.text,
-                style: linkStyle,
-                recognizer: onOpen != null ? (TapGestureRecognizer()..onTap = () => onOpen(element)) : null,
-            );
-          }
+          return TextSpan(
+            text: element.text,
+            style: linkStyle,
+            recognizer: onOpen != null
+                ? (TapGestureRecognizer()..onTap = () => onOpen(element))
+                : null,
+          );
         } else {
-          return WidgetSpan(
-            child: Text.rich(TextSpan(
-              text: element.text,
-              style: style,
-            )),
+          return TextSpan(
+            text: element.text,
+            style: style,
           );
         }
       },
