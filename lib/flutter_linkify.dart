@@ -284,20 +284,6 @@ class SelectableLinkify extends StatelessWidget {
   }
 }
 
-class LinkableSpan extends WidgetSpan {
-  LinkableSpan({
-    @required MouseCursor mouseCursor,
-    @required InlineSpan inlineSpan,
-  }) : super(
-          child: MouseRegion(
-            cursor: mouseCursor,
-            child: Text.rich(
-              inlineSpan,
-            ),
-          ),
-        );
-}
-
 /// Raw TextSpan builder for more control on the RichText
 TextSpan buildTextSpan(
   List<LinkifyElement> elements, {
