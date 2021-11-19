@@ -1,3 +1,7 @@
+## [4.1.1] - 2021-11-18
+
+- Fix SelectableLinkify to support All Spans ([#80](https://github.com/Cretezy/flutter_linkify/pull/80)
+
 ## [4.1.0] - 2020-02-26
 
 - Make mouse hover a pointer ([#70](https://github.com/Cretezy/flutter_linkify/pull/70), thanks [gsvano](https://github.com/gsvano)!)

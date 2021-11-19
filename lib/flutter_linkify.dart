@@ -104,6 +104,7 @@ class Linkify extends StatelessWidget {
         elements,
         style: Theme.of(context).textTheme.bodyText2.merge(style),
         onOpen: onOpen,
+        useMouseRegion: true,
         linkStyle: Theme.of(context)
             .textTheme
             .bodyText2
@@ -131,6 +132,9 @@ class Linkify extends StatelessWidget {
 class SelectableLinkify extends StatelessWidget {
   /// Text to be linkified
   final String text;
+
+  /// The number of font pixels for each logical pixel
+  final textScaleFactor;
 
   /// Linkifiers to be used for linkify
   final List<Linkifier> linkifiers;
@@ -220,6 +224,7 @@ class SelectableLinkify extends StatelessWidget {
     this.maxLines,
     // SelectableText
     this.focusNode,
+    this.textScaleFactor = 1.0,
     this.strutStyle,
     this.showCursor = false,
     this.autofocus = false,
@@ -264,6 +269,7 @@ class SelectableLinkify extends StatelessWidget {
       focusNode: focusNode,
       strutStyle: strutStyle,
       showCursor: showCursor,
+      textScaleFactor: textScaleFactor,
       autofocus: autofocus,
       toolbarOptions: toolbarOptions,
       cursorWidth: cursorWidth,
@@ -298,21 +304,30 @@ TextSpan buildTextSpan(
   TextStyle style,
   TextStyle linkStyle,
   LinkCallback onOpen,
+  bool useMouseRegion = false,
 }) {
   return TextSpan(
     children: elements.map<WidgetSpan>(
       (element) {
         if (element is LinkableElement) {
-          return LinkableSpan(
-            mouseCursor: SystemMouseCursors.click,
-            inlineSpan: TextSpan(
-              text: element.text,
-              style: linkStyle,
-              recognizer: onOpen != null
-                  ? (TapGestureRecognizer()..onTap = () => onOpen(element))
-                  : null,
-            ),
-          );
+          if (useMouseRegion) {
+            return LinkableSpan(
+              mouseCursor: SystemMouseCursors.click,
+              inlineSpan: TextSpan(
+                text: element.text,
+                style: linkStyle,
+                recognizer: onOpen != null
+                    ? (TapGestureRecognizer()..onTap = () => onOpen(element))
+                    : null,
+              ),
+            );
+          } else {
+            return TextSpan(
+                text: element.text,
+                style: linkStyle,
+                recognizer: onOpen != null ? (TapGestureRecognizer()..onTap = () => onOpen(element)) : null,
+            );
+          }
         } else {
           return WidgetSpan(
             child: Text.rich(TextSpan(
